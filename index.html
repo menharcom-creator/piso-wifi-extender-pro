@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Piso WiFi Extender Pro</title><link rel="stylesheet" href="css/style.css"></head><body>
+<header><h1>📶 Piso WiFi Extender Pro</h1><button id="theme" class="ghost">🌓</button></header>
+<main>
+<section class="view" id="v-home"><div class="grid">
+<div class="card"><small>Internet</small><b id="h-net">—</b></div>
+<div class="card"><small>Network</small><b id="h-ssid">Not detected</b></div>
+<div class="card"><small>Type / Quality</small><b id="h-type">Not detected</b></div>
+<div class="card"><small>Ping</small><b id="h-ping">—</b></div>
+<div class="card"><small>Download</small><b id="h-down">—</b></div>
+<div class="card"><small>Router</small><b id="h-router">Not set</b></div></div>
+<div class="btns"><button id="b-test">Test Internet</button><button id="b-refresh">Refresh Network</button>
+<button id="b-portal">Open Captive Portal</button><button data-go="speed">Run Speed Test</button>
+<button data-go="devices">View Devices</button><button data-go="extender">Configure Extender</button>
+<button id="b-wifi">Connect to Wi-Fi</button><button data-go="admin">Open Admin Portal</button>
+<button id="b-trouble">Troubleshooting</button></div>
+<div class="card"><h3>Alerts</h3><ul id="alerts"><li>No alerts yet.</li></ul></div>
+<p class="note">Web apps cannot read the Wi-Fi name or scan nearby networks. Values marked "Not detected" are not available to the browser; they are never faked.</p></section>
+
+<section class="view" id="v-extender" hidden><h2>Extender Management</h2>
+<div class="card"><label>Name<input id="x-name" placeholder="Living room repeater"></label>
+<label>IP / hostname<input id="x-host" placeholder="192.168.1.2"></label>
+<label>Mode<select id="x-mode"><option>Existing Repeater</option><option>Compatible Router (AP/repeater)</option><option>Smartphone Hotspot</option></select></label>
+<button id="x-save">Save Device</button></div>
+<div id="x-list"></div>
+<div class="card"><h3>Piso WiFi settings</h3>
+<label>Portal URL<input id="c-portal" placeholder="http://10.0.0.1"></label>
+<label>Router / gateway IP<input id="c-router" placeholder="192.168.1.1"></label>
+<label>Backend URL<input id="c-api" placeholder="http://localhost:8787"></label>
+<button id="c-save">Save Settings</button></div>
+<div class="card"><h3>Manual setup</h3><ol><li>Open the extender's admin page in a browser.</li><li>Choose Repeater/Client mode and select your Piso WiFi network.</li><li>Place it where signal is still strong. Hardware is required; this app cannot boost signal by itself.</li></ol>
+<p class="note">Remote SSID/password changes need a router adapter on the backend (none included for your model yet), so the app will say "unsupported" instead of pretending.</p></div></section>
+
+<section class="view" id="v-devices" hidden><h2>Connected Devices</h2>
+<div class="card"><button id="d-refresh">Refresh Device List</button><div id="d-out" class="note">Requires admin login and a router adapter on the backend.</div></div></section>
+
+<section class="view" id="v-speed" hidden><h2>Speed Test</h2>
+<div class="card"><div class="grid"><div><small>Download</small><b id="s-down">—</b></div><div><small>Upload</small><b id="s-up">—</b></div><div><small>Ping</small><b id="s-ping">—</b></div><div><small>Jitter</small><b id="s-jit">—</b></div></div>
+<progress id="s-bar" value="0" max="100"></progress><div class="btns"><button id="s-start">Start Test</button><button id="s-stop" class="ghost">Stop Test</button></div>
+<p class="note">Measured against Cloudflare's speed servers from this device. Results vary with distance and load.</p></div>
+<div class="card"><h3>History</h3><ul id="s-hist"></ul></div></section>
+
+<section class="view" id="v-settings" hidden><h2>Settings &amp; Diagnostics</h2>
+<div class="card"><h3>Diagnostics</h3><button id="g-run">Run Diagnostics</button><ul id="g-out"></ul></div>
+<div class="card"><h3>Backup &amp; Restore</h3><button id="k-exp">Export Settings</button>
+<label>Import backup<input type="file" id="k-imp" accept=".json"></label>
+<p class="note">Backs up app settings and extender profiles only — not router configuration, and no passwords.</p></div></section>
+
+<section class="view" id="v-admin" hidden><h2>Admin Portal</h2>
+<div id="a-login" class="card"><label>Username<input id="a-u" autocomplete="username"></label>
+<label>Password<input id="a-p" type="password" autocomplete="current-password"></label>
+<div class="btns"><button id="a-show" class="ghost">Show</button><button id="a-in">Login</button><button id="a-forgot" class="ghost">Forgot Password</button></div>
+<p id="a-msg" class="err"></p></div>
+<div id="a-rec" class="card" hidden><h3>Recover Admin Access</h3>
+<p class="note">Forgot your administrator password? Recover access to your own system. On the server run <code>npm run reset-token</code> to print a one-time token (valid 15 min). Only someone with access to the server/device can do this.</p>
+<label>Recovery token<input id="r-t"></label><label>New username<input id="r-u"></label><label>New password (min 8)<input id="r-p" type="password"></label>
+<div class="btns"><button id="r-go">Reset Admin Password</button><button id="r-back" class="ghost">Return to Login</button></div><p id="r-msg" class="err"></p></div>
+<div id="a-panel" hidden><div class="card"><h3>Overview</h3><div id="a-over"></div></div>
+<div class="card"><h3>Admin Account</h3><label>New username<input id="n-u"></label><label>New password<input id="n-p" type="password"></label>
+<div class="btns"><button id="n-save">Update Account</button><button id="a-out" class="ghost">Logout</button></div></div></div></section>
+</main>
+<nav><button data-v="home" class="on">🏠<span>Home</span></button><button data-v="extender">📡<span>Extender</span></button><button data-v="devices">💻<span>Devices</span></button><button data-v="speed">⚡<span>Speed</span></button><button data-v="settings">⚙️<span>Settings</span></button></nav>
+<div id="toast"></div><script src="js/app.js"></script></body></html>
